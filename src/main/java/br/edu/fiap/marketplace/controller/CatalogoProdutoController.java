@@ -26,14 +26,27 @@ public class CatalogoProdutoController {
 
     @GetMapping
     public ResponseEntity<List<CatalogoProdutoResponse>> listar() {
+
         return ResponseEntity.ok(service.listar());
+
     }
 
     @PostMapping
     public ResponseEntity<CatalogoProdutoResponse> cadastrar(@Valid @RequestBody CatalogoProdutoRequest request) {
+
         CatalogoProdutoResponse response = service.cadastrar(request);
+
         return ResponseEntity
                 .created(URI.create("/api/produtos" + response.id()))
                 .body(response);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<CatalogoProdutoResponse> atualizar(@PathVariable("id") Long id, @Valid @RequestBody CatalogoProdutoRequest request) {
+
+        return ResponseEntity.ok(service.atualizar(id, request));
+
+    }
+
+
 }
