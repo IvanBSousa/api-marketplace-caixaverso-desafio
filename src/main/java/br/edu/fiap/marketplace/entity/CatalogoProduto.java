@@ -99,4 +99,20 @@ public class CatalogoProduto {
     public BigDecimal getPreco() { return preco; }
     public Integer getEstoque() { return estoque; }
     public boolean isAtivo() { return ativo; }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public void setPreco(BigDecimal preco) {
+        this.preco = preco;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
 }
