@@ -57,22 +57,31 @@ public class Carrinho {
 
     /** TODO aceitar somente quantidade positiva enquanto o carrinho estiver aberto. */
     public void alterarQuantidade(int novaQuantidade) {
-        throw new UnsupportedOperationException("TODO implementar alterarQuantidade");
+        if(novaQuantidade <= 0 && status == StatusCarrinho.ABERTO) {
+            throw new UnsupportedOperationException("A quantidade deve ser positiva");
+        }
+        quantidade = novaQuantidade;
     }
 
     /** TODO calcular preço do produto multiplicado pela quantidade. */
     public BigDecimal calcularTotal() {
-        throw new UnsupportedOperationException("TODO implementar calcularTotal");
+        return new BigDecimal(String.valueOf(produto.getPreco().multiply(BigDecimal.valueOf(quantidade))));
     }
 
     /** TODO impedir finalizar carrinho cancelado ou já finalizado. */
     public void finalizar() {
-        throw new UnsupportedOperationException("TODO implementar finalizar");
+        if(status == StatusCarrinho.CANCELADO ||status == StatusCarrinho.FINALIZADO) {
+            throw new UnsupportedOperationException("O carrinho está " + status + ". Não é permitido FINALIZAR.");
+        }
+        status = StatusCarrinho.FINALIZADO;
     }
 
     /** TODO impedir alterações posteriores ao cancelamento. */
     public void cancelar() {
-        throw new UnsupportedOperationException("TODO implementar cancelar");
+        if(status == StatusCarrinho.CANCELADO) {
+            throw new UnsupportedOperationException("O carrinho está " + status + ". Não é permitido FINALIZAR.");
+        }
+        status = StatusCarrinho.CANCELADO;
     }
 
     public Long getId() { return id; }

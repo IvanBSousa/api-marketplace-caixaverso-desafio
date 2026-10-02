@@ -62,7 +62,11 @@ public class ConfirmacaoPagamento {
 
     /** TODO aprovar somente pagamento pendente e finalizar o carrinho. */
     public void aprovar() {
-        throw new UnsupportedOperationException("TODO implementar aprovar");
+        if(status != StatusPagamento.PENDENTE) {
+            throw new UnsupportedOperationException("Pagamento não está pendente");
+        }
+        status = StatusPagamento.PAGO;
+        this.carrinho.finalizar();
     }
 
     /** TODO recusar somente pagamento pendente. */

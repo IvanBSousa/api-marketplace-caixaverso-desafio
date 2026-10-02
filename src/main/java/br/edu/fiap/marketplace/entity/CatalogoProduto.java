@@ -1,5 +1,6 @@
 package br.edu.fiap.marketplace.entity;
 
+import br.edu.fiap.marketplace.exception.ValorInformadoInvalidoException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -50,27 +51,46 @@ public class CatalogoProduto {
 
     /** TODO rejeitar preço nulo, zero ou negativo. */
     public void alterarPreco(BigDecimal novoPreco) {
-        throw new UnsupportedOperationException("TODO implementar alterarPreco");
+        if (novoPreco == null || novoPreco.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new ValorInformadoInvalidoException(novoPreco);
+        }
     }
 
     /** TODO diminuir o estoque sem permitir saldo negativo. */
     public void baixarEstoque(int quantidade) {
-        throw new UnsupportedOperationException("TODO implementar baixarEstoque");
+        validaQuantidade(quantidade);
+        if(estoque - quantidade < 0) {
+            throw new UnsupportedOperationException("O estoque não pode ser negativo.");
+        }
+        estoque -= quantidade;
     }
 
     /** TODO aceitar somente reposição positiva. */
     public void reporEstoque(int quantidade) {
-        throw new UnsupportedOperationException("TODO implementar reporEstoque");
+        validaQuantidade(quantidade);
+        estoque += quantidade;
     }
 
     /** TODO disponibilizar o produto para compra. */
     public void ativar() {
-        throw new UnsupportedOperationException("TODO implementar ativar");
+        if(isAtivo()) {
+            throw new UnsupportedOperationException("O produto já está ativa.");
+        }
+        ativo = true;
     }
 
     /** TODO retirar o produto das novas compras. */
     public void desativar() {
-        throw new UnsupportedOperationException("TODO implementar desativar");
+        if(!isAtivo()) {
+            throw new UnsupportedOperationException("O produto já está inativa.");
+        }
+        ativo = false;
+    }
+
+    private void validaQuantidade(int quantidade) {
+        if(quantidade <= 0) {
+            throw new UnsupportedOperationException("A quantidade informada não pode ser zero ou negativa.");
+        }
     }
 
     public Long getId() { return id; }
