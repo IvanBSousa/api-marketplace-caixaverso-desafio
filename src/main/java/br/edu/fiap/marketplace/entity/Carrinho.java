@@ -78,8 +78,8 @@ public class Carrinho {
 
     /** TODO impedir alterações posteriores ao cancelamento. */
     public void cancelar() {
-        if(status == StatusCarrinho.CANCELADO) {
-            throw new UnsupportedOperationException("O carrinho está " + status + ". Não é permitido FINALIZAR.");
+        if(status != StatusCarrinho.ABERTO) {
+            throw new UnsupportedOperationException("O carrinho está " + status + ". Apenas carrinhos ABERTOS podem ser cancelados.");
         }
         status = StatusCarrinho.CANCELADO;
     }

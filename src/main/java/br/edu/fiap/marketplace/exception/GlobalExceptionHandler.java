@@ -80,6 +80,39 @@ public class GlobalExceptionHandler {
                 Map.of());
     }
 
+    @ExceptionHandler(RecursoNaoEncontradoException.class)
+    public ResponseEntity<ApiErrorResponse> tratarRecursoNaoEncontrado(
+            RecursoNaoEncontradoException erro,
+            HttpServletRequest request) {
+        return resposta(
+                HttpStatus.NOT_FOUND,
+                erro.getMessage(),
+                request,
+                Map.of());
+    }
+
+    @ExceptionHandler(ConflitoDeNegocioException.class)
+    public ResponseEntity<ApiErrorResponse> tratarConflitoNegocio(
+            ConflitoDeNegocioException erro,
+            HttpServletRequest request) {
+        return resposta(
+                HttpStatus.CONFLICT,
+                erro.getMessage(),
+                request,
+                Map.of());
+    }
+
+    @ExceptionHandler(UnsupportedOperationException.class)
+    public ResponseEntity<ApiErrorResponse> tratarOperacaoNaoSuportada(
+            UnsupportedOperationException erro,
+            HttpServletRequest request) {
+        return resposta(
+                HttpStatus.CONFLICT,
+                erro.getMessage(),
+                request,
+                Map.of());
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiErrorResponse> tratarInesperado(
             Exception erro,
