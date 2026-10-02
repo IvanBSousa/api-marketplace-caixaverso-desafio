@@ -54,6 +54,7 @@ public class CatalogoProduto {
         if (novoPreco == null || novoPreco.compareTo(BigDecimal.ZERO) <= 0) {
             throw new ValorInformadoInvalidoException(novoPreco);
         }
+        preco = novoPreco;
     }
 
     /** TODO diminuir o estoque sem permitir saldo negativo. */
