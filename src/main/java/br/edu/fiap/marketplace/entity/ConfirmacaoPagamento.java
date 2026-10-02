@@ -62,17 +62,23 @@ public class ConfirmacaoPagamento {
 
     /** TODO aprovar somente pagamento pendente e finalizar o carrinho. */
     public void aprovar() {
-        throw new UnsupportedOperationException("TODO implementar aprovar");
+        if(status != StatusPagamento.PENDENTE) {
+            throw new UnsupportedOperationException("Pagamento não está pendente");
+        }
+        status = StatusPagamento.PAGO;
+        this.carrinho.finalizar();
     }
 
     /** TODO recusar somente pagamento pendente. */
     public void recusar() {
-        throw new UnsupportedOperationException("TODO implementar recusar");
+        if(status == StatusPagamento.PENDENTE) {
+            throw new UnsupportedOperationException("Pagamento está pendente.");
+        }
     }
 
     /** TODO devolver verdadeiro apenas para status PAGO. */
     public boolean estaPago() {
-        throw new UnsupportedOperationException("TODO implementar estaPago");
+        return status == StatusPagamento.PAGO;
     }
 
     public Long getId() { return id; }
