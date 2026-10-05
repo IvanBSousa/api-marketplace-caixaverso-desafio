@@ -14,6 +14,7 @@ import jakarta.persistence.Table;
 import java.math.BigDecimal;
 import java.time.Instant;
 
+
 /**
  * Representa uma escolha simples de produto, quantidade e usuário.
  * Cada registro corresponde a um produto no carrinho do desafio.
@@ -55,6 +56,7 @@ public class Carrinho {
         this.criadoEm = Instant.now();
     }
 
+
     /** TODO aceitar somente quantidade positiva enquanto o carrinho estiver aberto. */
     public void alterarQuantidade(int novaQuantidade) {
         if(novaQuantidade <= 0 && status == StatusCarrinho.ABERTO) {
@@ -83,6 +85,7 @@ public class Carrinho {
         }
         status = StatusCarrinho.CANCELADO;
     }
+
 
     public Long getId() { return id; }
     public Usuario getUsuario() { return usuario; }
