@@ -53,4 +53,17 @@ public class CatalogoProdutoService {
 
         return CatalogoProdutoResponse.de(repository.save(produtoAtualizado));
     }
+
+    @Transactional
+    public CatalogoProdutoResponse reporEstoque(Long id, int quantidade) {
+
+        CatalogoProduto produto = repository.findById(id)
+                .orElseThrow(() -> new ProdutoNaoEncontradoException(id));
+
+        produto.reporEstoque(quantidade);
+
+        CatalogoProduto produtoAtualizado = repository.save(produto);
+
+        return CatalogoProdutoResponse.de(repository.save(produtoAtualizado));
+    }
 }

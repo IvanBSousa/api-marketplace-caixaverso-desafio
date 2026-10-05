@@ -11,6 +11,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +33,9 @@ import org.springframework.web.bind.annotation.PatchMapping;
 @Tag(name = "Pagamentos")
 @SecurityRequirement(name = "bearerAuth")
 public class ConfirmacaoPagamentoController {
+
+    private static final Logger logger = LoggerFactory.getLogger(ConfirmacaoPagamentoController.class);
+
     private final ConfirmacaoPagamentoService pagamentoService;
 
     public ConfirmacaoPagamentoController(ConfirmacaoPagamentoService pagamentoService) {
@@ -79,8 +84,13 @@ public class ConfirmacaoPagamentoController {
     })
     public ResponseEntity<ConfirmacaoPagamentoResponse> criar(
             @Valid @RequestBody ConfirmacaoPagamentoRequest request) {
+        logger.info("POST /api/pagamentos - Recebendo requisição");
+        logger.debug("Dados: carrinhoId={}, usuarioId={}, idPagamento={}",
+                request.carrinhoId(), request.usuarioId(), request.idPagamento());
+
         var confirmacao = pagamentoService.criarConfirmacaoPagamento(request);
         var response = ConfirmacaoPagamentoResponse.de(confirmacao);
+        logger.info("Pagamento criado com sucesso - ID: {}", confirmacao.getId());
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
@@ -104,8 +114,11 @@ public class ConfirmacaoPagamentoController {
                 description = "Token ausente ou inválido")
     })
     public ResponseEntity<ConfirmacaoPagamentoResponse> obter(@PathVariable Long id) {
+        logger.info("GET /api/pagamentos/{} - Buscando pagamento", id);
+
         var confirmacao = pagamentoService.obterPorId(id);
         var response = ConfirmacaoPagamentoResponse.de(confirmacao);
+        logger.info("Pagamento encontrado: ID={}, status={}", confirmacao.getId(), confirmacao.getStatus());
         return ResponseEntity.ok(response);
     }
 }

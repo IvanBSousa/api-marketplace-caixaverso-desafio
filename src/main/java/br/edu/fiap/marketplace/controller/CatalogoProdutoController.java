@@ -48,5 +48,15 @@ public class CatalogoProdutoController {
 
     }
 
+    @PatchMapping("{id}/estoque")
+    public ResponseEntity<CatalogoProdutoResponse> reporEstoque(
+            @PathVariable("id") Long id,
+            int quantidade
+    ) {
+
+        return ResponseEntity.ok(service.reporEstoque(id, quantidade));
+
+    }
+
 
 }
