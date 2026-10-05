@@ -54,6 +54,7 @@ public class CatalogoProduto {
         if (novoPreco == null || novoPreco.compareTo(BigDecimal.ZERO) <= 0) {
             throw new ValorInformadoInvalidoException(novoPreco);
         }
+        preco = novoPreco;
     }
 
     /** TODO diminuir o estoque sem permitir saldo negativo. */
@@ -99,4 +100,20 @@ public class CatalogoProduto {
     public BigDecimal getPreco() { return preco; }
     public Integer getEstoque() { return estoque; }
     public boolean isAtivo() { return ativo; }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public void setPreco(BigDecimal preco) {
+        this.preco = preco;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
 }

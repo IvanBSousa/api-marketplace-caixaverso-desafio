@@ -19,6 +19,39 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(RecursoNaoEncontradoException.class)
+    public ResponseEntity<ApiErrorResponse> tratarRecursoNaoEncontrado(
+            RecursoNaoEncontradoException erro,
+            HttpServletRequest request) {
+        return resposta(
+                HttpStatus.NOT_FOUND,
+                erro.getMessage(),
+                request,
+                Map.of());
+    }
+
+    @ExceptionHandler(ConflitoNegocioException.class)
+    public ResponseEntity<ApiErrorResponse> tratarConflitoNegocio(
+            ConflitoNegocioException erro,
+            HttpServletRequest request) {
+        return resposta(
+                HttpStatus.CONFLICT,
+                erro.getMessage(),
+                request,
+                Map.of());
+    }
+
+    @ExceptionHandler(RegraNegocioException.class)
+    public ResponseEntity<ApiErrorResponse> tratarRegraNegocio(
+            RegraNegocioException erro,
+            HttpServletRequest request) {
+        return resposta(
+                HttpStatus.CONFLICT,
+                erro.getMessage(),
+                request,
+                Map.of());
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiErrorResponse> tratarValidacao(
             MethodArgumentNotValidException erro,
@@ -43,6 +76,39 @@ public class GlobalExceptionHandler {
         return resposta(
                 HttpStatus.BAD_REQUEST,
                 "A requisição contém um valor ou formato inválido.",
+                request,
+                Map.of());
+    }
+
+    @ExceptionHandler(RecursoNaoEncontradoException.class)
+    public ResponseEntity<ApiErrorResponse> tratarRecursoNaoEncontrado(
+            RecursoNaoEncontradoException erro,
+            HttpServletRequest request) {
+        return resposta(
+                HttpStatus.NOT_FOUND,
+                erro.getMessage(),
+                request,
+                Map.of());
+    }
+
+    @ExceptionHandler(ConflitoDeNegocioException.class)
+    public ResponseEntity<ApiErrorResponse> tratarConflitoNegocio(
+            ConflitoDeNegocioException erro,
+            HttpServletRequest request) {
+        return resposta(
+                HttpStatus.CONFLICT,
+                erro.getMessage(),
+                request,
+                Map.of());
+    }
+
+    @ExceptionHandler(UnsupportedOperationException.class)
+    public ResponseEntity<ApiErrorResponse> tratarOperacaoNaoSuportada(
+            UnsupportedOperationException erro,
+            HttpServletRequest request) {
+        return resposta(
+                HttpStatus.CONFLICT,
+                erro.getMessage(),
                 request,
                 Map.of());
     }
