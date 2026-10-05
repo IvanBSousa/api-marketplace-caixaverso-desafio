@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -120,5 +121,45 @@ public class ConfirmacaoPagamentoController {
         var response = ConfirmacaoPagamentoResponse.de(confirmacao);
         logger.info("Pagamento encontrado: ID={}, status={}", confirmacao.getId(), confirmacao.getStatus());
         return ResponseEntity.ok(response);
+    }
+
+    @PatchMapping("/{id}/aprovar")
+    @Operation(
+            summary = "Aprovar confirmação de pagamento",
+            description = "Aprova uma confirmação de pagamento pelo ID")
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Confirmação de pagamento encontrada",
+                    content = @Content(schema = @Schema(implementation = ConfirmacaoPagamentoResponse.class))),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Pagamento não encontrado"),
+            @ApiResponse(
+                    responseCode = "401",
+                    description = "Token ausente ou inválido")
+    })
+    public ResponseEntity<ConfirmacaoPagamentoResponse> confirmarPagamento(@PathVariable Long id) {
+        return ResponseEntity.ok(pagamentoService.aprovar(id));
+    }
+
+    @PatchMapping("/{id}/recusar")
+    @Operation(
+            summary = "Recusar confirmação de pagamento",
+            description = "Recusa uma confirmação de pagamento pelo ID")
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Recusa de pagamento encontrada",
+                    content = @Content(schema = @Schema(implementation = ConfirmacaoPagamentoResponse.class))),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Pagamento não encontrado"),
+            @ApiResponse(
+                    responseCode = "401",
+                    description = "Token ausente ou inválido")
+    })
+    public ResponseEntity<ConfirmacaoPagamentoResponse> recusarPagamento(@PathVariable Long id) {
+        return ResponseEntity.ok(pagamentoService.recusar(id));
     }
 }

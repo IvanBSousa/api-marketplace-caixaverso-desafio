@@ -1,6 +1,7 @@
 package br.edu.fiap.marketplace.service;
 
 import br.edu.fiap.marketplace.dto.ConfirmacaoPagamentoRequest;
+import br.edu.fiap.marketplace.dto.ConfirmacaoPagamentoResponse;
 import br.edu.fiap.marketplace.entity.Carrinho;
 import br.edu.fiap.marketplace.entity.ConfirmacaoPagamento;
 import br.edu.fiap.marketplace.entity.StatusCarrinho;
@@ -38,7 +39,7 @@ public class ConfirmacaoPagamentoService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    public void aprovar(Long id) {
+    public ConfirmacaoPagamentoResponse aprovar(Long id) {
 
         ConfirmacaoPagamento pagamento =
                 pagamentoRepository.findById(id)
@@ -49,9 +50,11 @@ public class ConfirmacaoPagamentoService {
         pagamento.aprovar();
 
         pagamentoRepository.save(pagamento);
+
+        return ConfirmacaoPagamentoResponse.de(pagamento);
     }
 
-    public void recusar(Long id) {
+    public ConfirmacaoPagamentoResponse recusar(Long id) {
 
         ConfirmacaoPagamento pagamento =
                 pagamentoRepository.findById(id)
@@ -62,6 +65,8 @@ public class ConfirmacaoPagamentoService {
         pagamento.recusar();
 
         pagamentoRepository.save(pagamento);
+
+        return ConfirmacaoPagamentoResponse.de(pagamento);
     }
 
     /**

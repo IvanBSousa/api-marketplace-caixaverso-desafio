@@ -72,10 +72,10 @@ public class ConfirmacaoPagamento {
     /** TODO recusar somente pagamento pendente. */
     public void recusar() {
         if(status == StatusPagamento.PENDENTE) {
-            throw new UnsupportedOperationException("Pagamento está pendente.");
+            throw new UnsupportedOperationException("Pagamento não está pendente.");
         }
-        this.status = StatusPagamento.RECUSADO;
-        this.confirmadoEm = Instant.now();
+
+        status = StatusPagamento.RECUSADO;
     }
 
     /** TODO devolver verdadeiro apenas para status PAGO. */

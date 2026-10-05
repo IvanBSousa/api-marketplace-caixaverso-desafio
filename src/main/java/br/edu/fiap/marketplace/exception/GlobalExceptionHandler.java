@@ -89,17 +89,6 @@ public class GlobalExceptionHandler {
                 Map.of());
     }
 
-    @ExceptionHandler(RecursoNaoEncontradoException.class)
-    public ResponseEntity<ApiErrorResponse> tratarRecursoNaoEncontrado(
-            RecursoNaoEncontradoException erro,
-            HttpServletRequest request) {
-        return resposta(
-                HttpStatus.NOT_FOUND,
-                erro.getMessage(),
-                request,
-                Map.of());
-    }
-
     @ExceptionHandler(ConflitoDeNegocioException.class)
     public ResponseEntity<ApiErrorResponse> tratarConflitoNegocio(
             ConflitoDeNegocioException erro,

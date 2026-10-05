@@ -1,12 +1,14 @@
 package br.edu.fiap.marketplace.service;
 
+import br.edu.fiap.marketplace.dto.AtualizarQuantidadeRequest;
 import br.edu.fiap.marketplace.dto.CatalogoProdutoRequest;
 import br.edu.fiap.marketplace.dto.CatalogoProdutoResponse;
 import br.edu.fiap.marketplace.entity.CatalogoProduto;
 import br.edu.fiap.marketplace.exception.ProdutoNaoEncontradoException;
 import br.edu.fiap.marketplace.repository.CatalogoProdutoRepository;
-import jakarta.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -54,16 +56,20 @@ public class CatalogoProdutoService {
         return CatalogoProdutoResponse.de(repository.save(produtoAtualizado));
     }
 
-    @Transactional
-    public CatalogoProdutoResponse reporEstoque(Long id, int quantidade) {
+    @Transactional(readOnly = true)
+    public CatalogoProdutoResponse buscar(Long id) {
+        return repository.findById(id)
+                .map(CatalogoProdutoResponse::de)
+                .orElseThrow(() -> new ProdutoNaoEncontradoException(id));
+    }
 
+    @Transactional
+    public CatalogoProdutoResponse reporEstoque(Long id, AtualizarQuantidadeRequest request) {
         CatalogoProduto produto = repository.findById(id)
                 .orElseThrow(() -> new ProdutoNaoEncontradoException(id));
 
-        produto.reporEstoque(quantidade);
+        produto.reporEstoque(request.quantidade());
 
-        CatalogoProduto produtoAtualizado = repository.save(produto);
-
-        return CatalogoProdutoResponse.de(repository.save(produtoAtualizado));
+        return CatalogoProdutoResponse.de(repository.saveAndFlush(produto));
     }
 }
