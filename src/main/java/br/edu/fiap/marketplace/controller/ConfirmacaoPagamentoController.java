@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PatchMapping;
+
 
 /**
  * Rotas protegidas para criação e consulta de confirmações de pagamento.
@@ -38,6 +40,21 @@ public class ConfirmacaoPagamentoController {
 
     public ConfirmacaoPagamentoController(ConfirmacaoPagamentoService pagamentoService) {
         this.pagamentoService = pagamentoService;
+    }
+
+    @PatchMapping("/{id}/aprovar")
+    public ResponseEntity<Void> aprovar(@PathVariable Long id) {
+        pagamentoService.aprovar(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping("/{id}/recusar")
+    public ResponseEntity<Void> recusar(
+            @PathVariable Long id) {
+
+        pagamentoService.recusar(id);
+
+        return ResponseEntity.ok().build();
     }
 
     /**

@@ -17,7 +17,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/** TODO implementar criação, aprovação, recusa e consulta do pagamento. */
+import java.math.BigDecimal;
+
+
 @Service
 public class ConfirmacaoPagamentoService {
 
@@ -34,6 +36,32 @@ public class ConfirmacaoPagamentoService {
         this.pagamentoRepository = pagamentoRepository;
         this.carrinhoRepository = carrinhoRepository;
         this.usuarioRepository = usuarioRepository;
+    }
+
+    public void aprovar(Long id) {
+
+        ConfirmacaoPagamento pagamento =
+                pagamentoRepository.findById(id)
+                        .orElseThrow(() ->
+                                new RuntimeException(
+                                        "Pagamento não encontrado"));
+
+        pagamento.aprovar();
+
+        pagamentoRepository.save(pagamento);
+    }
+
+    public void recusar(Long id) {
+
+        ConfirmacaoPagamento pagamento =
+                pagamentoRepository.findById(id)
+                        .orElseThrow(() ->
+                                new RuntimeException(
+                                        "Pagamento não encontrado"));
+
+        pagamento.recusar();
+
+        pagamentoRepository.save(pagamento);
     }
 
     /**
