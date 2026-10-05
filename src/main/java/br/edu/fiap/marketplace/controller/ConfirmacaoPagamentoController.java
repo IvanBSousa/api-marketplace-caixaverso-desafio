@@ -43,21 +43,6 @@ public class ConfirmacaoPagamentoController {
         this.pagamentoService = pagamentoService;
     }
 
-    @PatchMapping("/{id}/aprovar")
-    public ResponseEntity<Void> aprovar(@PathVariable Long id) {
-        pagamentoService.aprovar(id);
-        return ResponseEntity.ok().build();
-    }
-
-    @PatchMapping("/{id}/recusar")
-    public ResponseEntity<Void> recusar(
-            @PathVariable Long id) {
-
-        pagamentoService.recusar(id);
-
-        return ResponseEntity.ok().build();
-    }
-
     /**
      * Cria uma nova confirmação de pagamento com status PENDENTE.
      */
