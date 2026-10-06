@@ -2,6 +2,17 @@
 
 Projeto inicial para um grupo completar uma API multicamada com Spring Boot, JPA, PostgreSQL, BCrypt, JWT e Swagger.
 
+## Grupo Sala 1
+
+- Ivan de Bastos Sousa
+- Albert Lima de Melo
+- Katia Vivi Kuhn
+- Adriana Reis Honorato de Araujo
+- Rogerio Jose de Almeida
+- Bruno Prando Azeredo
+- Jefferson Silva Ximenes de Carvalho
+- Filipe Videira Martins
+
 ## O que já está pronto
 
 - JDK 25 e Maven;
